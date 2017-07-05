@@ -6,7 +6,7 @@
 # @File    : urls.py
 # @Software: PyCharm
 from django.conf.urls import url
-from user import views
+from users import views
 urlpatterns = [
     url(r'user_center_info', views.UserCenterInfoView.as_view(), name='user_center_info'),
     url(r'register', views.RegisterView.as_view(), name='register'),

@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user.apps.UserConfig',
+    # 'users.apps.UserConfig',
+    'users',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -132,3 +133,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+# 自己配置区域
+AUTH_USER_MODEL = "users.UserProfile"

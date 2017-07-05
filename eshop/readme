@@ -1,8 +1,15 @@
-环境依赖:
-    pycharm 2017
-    python 3.5
-    django==1.8.7
-    pillow
-    redis
-    logger
-    pymysql
+    django-suit  使用入门 :
+    from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
+
+    TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+        'django.core.context_processors.request',
+    )
+        'suit',
+
+    环境:
+        pycharm 2017
+        python 3.5
+        django 1.8.7
+        pillow
+        pymysql
+        redis

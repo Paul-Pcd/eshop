@@ -6,13 +6,13 @@ from django.contrib.auth.models import AbstractUser
 class UserProfile(AbstractUser):
     """用户信息"""
     gender_type = (
-        (0, "女"), (1, "男")
+        ("0", "女"), ("1", "男")
     )
     ni_name = models.CharField(max_length=20, verbose_name='昵称', null=True, blank=True)
-    telephone_number = models.IntegerField(max_length=11)
-    address = models.CharField(max_length=70)
-    gender = models.CharField(max_length=3, choices=gender_type, default=0, verbose_name="性别")
-    register_date = models.DateField(auto_now_add=True)
+    telephone_number = models.CharField(null=True, max_length=11, verbose_name='电话号码')
+    address = models.CharField(max_length=70, verbose_name='地址', null=True, blank=True)
+    gender = models.CharField(max_length=3, choices=gender_type, default="0", verbose_name="性别")
+    register_date = models.DateField(auto_now_add=True, verbose_name='注册日期')
 
     class Meta:
         verbose_name = '用户信息'
@@ -26,7 +26,7 @@ class UserProfile(AbstractUser):
 class EmailVerifyRecord(models.Model):
     """邮箱验证"""
     send_type = (
-        (0, '注册'), (1, '找回密码')
+        ("0", '注册'), ("1", '找回密码')
     )
     code = models.CharField(max_length=20, verbose_name='验证码')
     email = models.EmailField(max_length=30, verbose_name='邮箱')

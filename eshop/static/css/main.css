@@ -1,5 +1,9 @@
 body{font-family:'Microsoft Yahei';font-size:12px;color:#666;}
 html,body{height:100%}
+
+/*自己定义的样式*/
+.errs{color:#f00;position:absolute;left:0;top:43px;}
+/*自己定义的样式结束*/
 /* 顶部样式 */
 .header_con{
 	background-color:#f7f7f7;

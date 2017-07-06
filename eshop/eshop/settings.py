@@ -114,3 +114,17 @@ STATICFILES_DIRS = (
 # 自己配置区域==============
 # 声明使用自己定义的用户模型来管理用户信息
 AUTH_USER_MODEL = "users.UserProfile"
+#邮件发送配置========================================================
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.163.com'
+EMAIL_PORT = 25
+#发送邮件的邮箱
+EMAIL_HOST_USER = 'lyzhuhaoliang@163.com'
+#在邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = 'zhu3850835'
+#收件人看到的发件人
+EMAIL_FROM = 'lyzhuhaoliang@163.com'  # 需要和邮箱号码一致
+# 配置允许采用邮箱登陆 是一个元组 必须加上逗号
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)

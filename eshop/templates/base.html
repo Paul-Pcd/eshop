@@ -11,32 +11,34 @@
 </head>
 <body>
 {% block header %}
-<div class="header_con">
-		<div class="header">
-			<div class="welcome fl">欢迎来到天天生鲜!</div>
-			<div class="fr">
+    <div class="header_con">
+        <div class="header">
+            <div class="welcome fl">欢迎来到天天生鲜!</div>
+            <div class="fr">
                 {% if request.user.is_authenticated %}
-				<div class="login_info fl" style="display: block">
-					欢迎您：<em>张 山</em>
-				</div>
+                    <div class="login_info fl" style="display: block">
+                        欢迎您：<em>{{ request.user.username }}</em>
+                    </div>
                 {% else %}
-				<div class="login_btn fl" style="display: block">
-					<a href="{% url 'user:login' %}">登录</a>
-					<span>|</span>
-					<a href="{% url 'user:register' %}">注册</a>
-				</div>
+                    <div class="login_btn fl" style="display: block">
+                        <a href="{% url 'user:login' %}">登录</a>
+                        <span>|</span>
+                        <a href="{% url 'user:register' %}">注册</a>
+                    </div>
                 {% endif %}
-				<div class="user_link fl">
-					<span>|</span>
-					<a href="{% url 'user:user_center_info' %}">用户中心</a>
-					<span>|</span>
-					<a href="{% url 'user:user_center_site'%}">我的购物车</a>
-					<span>|</span>
-					<a href="{% url 'user:user_center_order' %}">我的订单</a>
-				</div>
-			</div>
-		</div>
-	</div>
+                <div class="user_link fl">
+                    <span>|</span>
+                    <a href="{% url 'user:user_center_info' %}?url_id=1">用户中心</a>
+                    <span>|</span>
+                    <a href="{% url 'user:user_center_site' %}">我的购物车</a>
+                    <span>|</span>
+                    <a href="{% url 'user:user_center_order' %}?url_id=2">我的订单</a>
+                    <span>|</span>
+                    <a href="{% url 'user:logout' %}">注销</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock header %}
 
 {% block content %}

@@ -15,5 +15,5 @@ class EmailVerifyRecord(admin.ModelAdmin):
 
 @admin.register(Receiver)
 class ReceiverAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'city', 'telephone', 'address']
+    list_display = ['id', 'name', 'city', 'telephone', 'address', 'user']
 

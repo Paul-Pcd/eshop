@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'users',
     'shop',
+    'tinymce',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -48,6 +49,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'users.middleware.SaveUrlMiddleWare',
 )
 
 ROOT_URLCONF = 'eshop.urls'
@@ -127,4 +129,15 @@ EMAIL_FROM = 'lyzhuhaoliang@163.com'  # 需要和邮箱号码一致
 # 配置允许采用邮箱登陆 是一个元组 必须加上逗号
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
+)
+# 配置富文本编辑器 在admin中使用
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': 'advanced',
+    'width': 600,
+    'height': 400,
+}
+# 配置媒体路径
+MEDIA_URL = '/static/images/'
+MEDIA_ROOT = (
+    os.path.join(BASE_DIR, 'static/images')
 )

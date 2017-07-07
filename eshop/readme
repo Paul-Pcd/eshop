@@ -13,3 +13,4 @@
         pillow
         pymysql
         redis
+        pip install django-tinymce==2.6.0  富文本编辑器 用在admin中

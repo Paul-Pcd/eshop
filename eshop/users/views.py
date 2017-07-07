@@ -11,20 +11,11 @@ from django.db.models import Q
 from .models import UserProfile, Receiver, EmailVerifyRecord
 from .forms import RegisterForm, LoginForm, ReceiverForm, ModifyForm
 from utils.email_send import send_email
+from .decorate import check_auth
 
 
 # Create your views here.
-def check_auth(func):
-    """装饰器"""
 
-    def inner(request, *args, **kwargs):
-        user_id = request.session.get('user_id')
-        if user_id:
-            return func(request, *args, **kwargs)
-        else:
-            return redirect('/user/login/')
-
-    return inner
 
 
 def check_username(request):
@@ -71,6 +62,12 @@ class RegisterView(View):
     def save_register_info(self, request, user):
         """保存用户注册的信息"""
         username = request.POST.get('username')
+        email = request.POST.get('email')
+        # 在后台再次判断 邮箱和用户名是否已经存在  存在就返回
+        if UserProfile.objects.filter(Q(username=username)|Q(email=email)):
+            err = "用户名或者邮箱已经存在"
+            print(err)
+            return render(request, 'user/register.html', locals())
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
         allow = request.POST.get('allow')
@@ -78,7 +75,7 @@ class RegisterView(View):
             err = '两次输入的密码一致'
             err_allow = "请阅读用户使用协议"
             return render(request, 'user/register.html', locals())
-        email = request.POST.get('email')
+
         user.username = username
         user.password = make_password(password1)
         user.email = email
@@ -115,7 +112,13 @@ class LoginView(View):
         if user.is_active:
             login(request, user)
             request.session['user_id'] = user.id  # 获取用户的id保存在信息中
-            response = redirect('/shop/index/')
+            request.session['username'] = username  # 把用户名保存在session中 用来在前端进行是否登陆验证
+            url_path = request.session.get('url_path')  # 通过中间件来完成原页面的跳转
+            print(url_path)
+            if url_path:
+                response = redirect(url_path)
+            else:
+                response = redirect('/shop/index/')
             if request.POST.get('checkbox') == '1':
                 response.set_cookie('username', username)  # 设定cookie
             elif request.POST.get('checkbox') == None:
@@ -131,14 +134,13 @@ class UserCenterInfoView(View):
 
     @method_decorator(check_auth)
     def get(self, request):
-        url_id = request.GET.get('url_id')
         try:
             user_id = request.session.get('user_id')
-            print(user_id)
             user_info_list = UserProfile.objects.get(id=user_id)
+            return render(request, 'user/user_center_info.html', locals())
         except Exception as err:
-            print(err)
-        return render(request, 'user/user_center_info.html', locals())
+            # TODO 这里怎么把 通过redirect  把错误的信息带回去  也就是 解解决通过后台进行登陆的是后 拿不到session中的值
+            return redirect('/user/login/')
 
 
 class UserCenterOrderView(View):
@@ -146,7 +148,6 @@ class UserCenterOrderView(View):
 
     @method_decorator(check_auth)
     def get(self, request):
-        url_id = request.GET.get('url_id')
         user_id = request.session.get('user_id')
         user_info_list = UserProfile.objects.get(id=user_id)
         return render(request, 'user/user_center_order.html', locals())
@@ -164,8 +165,6 @@ class UserCenterSiteView(View):
 
     @method_decorator(check_auth)
     def get(self, request):
-        url_id = request.GET.get('url_id')
-        print(url_id)
         user_info_list, receiver_info = self.get_user(request)
         return render(request, 'user/user_center_site.html', locals())
 

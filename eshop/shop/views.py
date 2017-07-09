@@ -53,8 +53,6 @@ class ListCheckView(View):
         current_page = int(current_page)
         goods_category = goods_category_list.filter(id=nid).first()
         goods_info = GoodsInfo.objects.filter(goods_category=goods_category).order_by(order)
-        my_print("排序的解雇", order)
-        my_print(goods_info)
         # 实现分页
         page = Paginator(goods_info, 2)
         print("hahdfha", page.num_pages)

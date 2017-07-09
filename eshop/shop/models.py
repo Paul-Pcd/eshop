@@ -48,4 +48,4 @@ class GoodsInfo(models.Model):
         ordering = ('id',)
 
     def __str__(self):
-        return self.goods_name
+        return self.goods_name +"   "+ str(self.goods_price) +"    "+ str(self.goods_click)

@@ -6,6 +6,8 @@
 # @File    : email_send.py
 # @Software: PyCharm
 import random, string
+import hashlib
+
 from users.models import EmailVerifyRecord
 
 from django.core.mail import send_mail
@@ -20,7 +22,10 @@ def random_str():
     ran = random.Random()
     for i in range(8):
         str += chars[ran.randint(0, length)]
-    print(str)
+    m = hashlib.md5() # 采用md5 加密
+    m.update(str)
+    ret = m.hexdigest() # 进行加密 不把加完密的字符串存入到数据库
+        # 进行验证的时候 取出进行验证
     return str
 
 

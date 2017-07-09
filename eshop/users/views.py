@@ -114,7 +114,7 @@ class LoginView(View):
             request.session['user_id'] = user.id  # 获取用户的id保存在信息中
             request.session['username'] = username  # 把用户名保存在session中 用来在前端进行是否登陆验证
             url_path = request.session.get('url_path')  # 通过中间件来完成原页面的跳转
-            print(url_path)
+            print("登陆成功后的从", url_path)
             if url_path:
                 response = redirect(url_path)
             else:

@@ -7,21 +7,23 @@
         <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
     {% endblock js %}
     <div class="right_content clearfix">
-        <h3 class="common_title2">收货地址</h3>
+        <h3 class="common_title2">默认收货地址</h3>
         <div class="site_con">
             <dl>
-                <dt>当前地址：</dt>
-                <dd>{{ user_info_list.receiver_name }}&nbsp;&nbsp; 海淀区 &nbsp;&nbsp;{{ user_info_list.address }}&nbsp;&nbsp;
+                <dt>当前地址:</dt>
+                <dd id="moren">{{ user_info_list.receiver_name }}&nbsp;&nbsp; 海淀区 &nbsp;&nbsp;{{ user_info_list.address }}&nbsp;&nbsp;
                     （{{ user_info_list.receiver_name }} 收）&nbsp;&nbsp; {{ user_info_list.telephone_number }}</dd>
             </dl>
             {% for info in receiver_info %}
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <p><span style="font-size: 18px">{{ info.name }}</span>&nbsp;&nbsp; <span
-                                style="margin-left: 30px">{{ info.telephone }}</span></p>
-                        <p>
+                        <p><span style="font-size: 18px" id="name{{ forloop.counter }}">{{ info.name }}</span>&nbsp;&nbsp;
+                            <span
+                                    style="margin-left: 30px"
+                                    id="telephone{{ forloop.counter }}">{{ info.telephone }}</span></p>
+                        <div id="address{{ forloop.counter }}">
                             {{ info.address }}
-                        </p>
+                        </div>
                     </div>
                     <div class="panel-body">
                         <input type="radio" name="address_check" class="pull-left">&nbsp;&nbsp;设置为默认地址
@@ -38,13 +40,23 @@
 
     </div>
     <script>
-        {#        $(function(){#}
-        {#            alert("jejej")#}
-        {#            var radio = $("input[type='radio']");#}
-        {#            var $radio = $(radio)#}
-        {#            $radio.change(function () {#}
-        {#                alert($this.prop('check'))#}
-        {#            });})#}
+        $(function () {
+            var $radio = $($(".site_con input[type='radio']"));
+            $radio.each(function (index) {
+                $radio.eq(index).click(function () {
+                    if ($radio.eq(index).prop('checked')) {
+                        var name = $('#name' + (index + 1)).text();
+                        var telephone = $('#telephone' + (index + 1)).text();
+                        var address = $('#address' + (index + 1)).text();
+                        var data = {'name': name, 'telephone': telephone, 'address': address};
+                        $.get('{% url 'user:modify_address' %}', data, function (data) {
+                            console.log(data);
+                           $('#moren').html(data.name +'&nbsp;&nbsp; 海淀区 &nbsp;&nbsp;'+data.address + '&nbsp;&nbsp;'+'（'+data.name +'收）&nbsp;&nbsp;'+data.telephone )
+                        });
+                    }
+                })
+            })
+        })
     </script>
 {% endblock user_content %}
 

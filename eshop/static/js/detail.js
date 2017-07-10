@@ -47,7 +47,7 @@ $(function () {
     });
     // 计算总的价格
     function get_total_price(total_num) {
-        var total_price = new Number(total_num * goods_price).toFixed(2)
+        var total_price = new Number(total_num * goods_price).toFixed(2);
         $total_price.html(total_price + "元");
     }
 
@@ -67,22 +67,17 @@ $(function () {
 
     var $to_top = $show_count.offset().top;
     var $to_left = $show_count.offset().left;
-    var add_jump_top = $add_jump.offset().top;
-    var add_jump_left = $add_jump.offset().left;
-    //
-    // $add_jump.css({
-    //     'left': $add_left + 80,
-    //     'top': $add_top + 10,
-    //     'display': 'block'
-    // });
     $add_cart.click(function () {
         var goods_total_num = parseInt($('.num_show').val());
         var goods_url = $("input[name='hidden']").val();
+        var $show_count = $('#show_count');
         $.get(goods_url, function (data) {
             num = data.data;
             $('.show_kucun em').html(num);
             if (goods_total_num < num) {
-                $('#show_count').html(goods_total_num);
+                count = parseInt($show_count.html());
+                total_num = count + goods_total_num;
+                $show_count.html(total_num);
             }
         });
         $add_jump.css({

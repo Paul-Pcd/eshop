@@ -16,11 +16,14 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
+
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^user/', include('users.urls', namespace='user')),
     url(r'^shop/', include('shop.urls', namespace='shop')),
     url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^search/', include('haystack.urls')),
+    # url('^search/$', MySearchView.as_view())
 ]
 
 

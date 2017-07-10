@@ -1,10 +1,4 @@
-    django-suit  使用入门 :
-    from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
-    TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-        'django.core.context_processors.request',
-    )
-        'suit',
 
     环境:
         pycharm 2017
@@ -13,4 +7,8 @@
         pillow
         pymysql
         redis
-        pip install django-tinymce==2.6.0  富文本编辑器 用在admin中
+        django-tinymce==2.6.0  富文本编辑器 用在admin中
+        三个用于分分词的包
+        django-haystack
+        whoosh
+        jieba

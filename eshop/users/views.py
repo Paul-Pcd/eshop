@@ -11,7 +11,9 @@ from django.db.models import Q
 from .models import UserProfile, Receiver, EmailVerifyRecord
 from .forms import RegisterForm, LoginForm, ReceiverForm, ModifyForm
 from utils.email_send import send_email
+from utils.use_redis import UseRedis
 from .decorate import check_auth
+from shop.models import GoodsInfo
 
 
 # Create your views here.
@@ -28,6 +30,9 @@ def check_username(request):
 def user_logout(request):
     """注销函数"""
     logout(request)
+    # del request.session['user_id']
+    # del request.session['username']
+
     return redirect('/shop/index/')
 
 
@@ -35,8 +40,6 @@ class CustomBackend(ModelBackend):
     """验证用户可以使用邮箱,电话登陆"""
 
     def authenticate(self, username=None, password=None, **kwargs):
-        print(username)
-        print(password)
         try:
             user = UserProfile.objects.get(Q(username=username) | Q(email=username) | Q(telephone_number=username))
             if user.check_password(password):
@@ -64,7 +67,7 @@ class RegisterView(View):
         username = request.POST.get('username')
         email = request.POST.get('email')
         # 在后台再次判断 邮箱和用户名是否已经存在  存在就返回
-        if UserProfile.objects.filter(Q(username=username)|Q(email=email)):
+        if UserProfile.objects.filter(Q(username=username) | Q(email=email)):
             err = "用户名或者邮箱已经存在"
             print(err)
             return render(request, 'user/register.html', locals())
@@ -93,7 +96,6 @@ class LoginView(View):
         return render(request, 'user/login.html', locals())
 
     def post(self, request):
-        print(request.POST)
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = request.POST.get('username')
@@ -134,13 +136,36 @@ class UserCenterInfoView(View):
 
     @method_decorator(check_auth)
     def get(self, request):
+        user_id = request.session.get('user_id') # 获取用户的id 来区分不同的用户 在redis中
+        recently_browsed = UseRedis.read_from_cache(user_id)
+        if recently_browsed is not None:
+            recently_browsed_list = []
+            for item in recently_browsed:
+                recently_browsed_list.append(GoodsInfo.objects.get(id=item))
         try:
             user_id = request.session.get('user_id')
             user_info_list = UserProfile.objects.get(id=user_id)
             return render(request, 'user/user_center_info.html', locals())
         except Exception as err:
-            # TODO 这里怎么把 通过redirect  把错误的信息带回去  也就是 解解决通过后台进行登陆的是后 拿不到session中的值
+            # TODO 这里怎么把 通过redirect  把错误的信息带回去  也就是 解决通过后台进行登陆的是后 拿不到session中的值
             return redirect('/user/login/')
+
+    # @method_decorator(check_auth)
+    # def get(self, request):
+    #     recently_browsed = request.session.get('recently_browsed','').split('/')
+    #     for item in recently_browsed:
+    #         if len(item) == 0:
+    #             recently_browsed.remove(item)
+    #     recently_browsed_list = []
+    #     for item in recently_browsed:
+    #         recently_browsed_list.append(GoodsInfo.objects.get(id=item))
+    #     try:
+    #         user_id = request.session.get('user_id')
+    #         user_info_list = UserProfile.objects.get(id=user_id)
+    #         return render(request, 'user/user_center_info.html', locals())
+    #     except Exception as err:
+    #         # TODO 这里怎么把 通过redirect  把错误的信息带回去  也就是 解决通过后台进行登陆的是后 拿不到session中的值
+    #         return redirect('/user/login/')
 
 
 class UserCenterOrderView(View):
@@ -159,6 +184,7 @@ class UserCenterSiteView(View):
     def get_user(self, request):
         """获取用户的信息"""
         user_id = request.session.get('user_id')
+
         user_info_list = UserProfile.objects.get(id=user_id)  # 获取当前用户的信息
         receiver_info = Receiver.objects.filter(user=user_info_list)  # 返回收货人信息
         return user_info_list, receiver_info
@@ -197,12 +223,27 @@ class ModifyAddressView(View):
     def get(self, request):
         # 先去获取当前的用户
         # TODO 把user_id 融合到url中 不在显示在get提交的路径上了
-        user = request.session.get('user_id')
+        user_id = request.session.get('user_id')
+        user = UserProfile.objects.get(id=user_id)
+        if request.is_ajax():
+            return self.ajax_post(request,user)  # 调用ajax请求的方法
         receiver_user_id = request.GET.get("id")
-        receiver = Receiver.objects.filter(user=user)
+        receiver = Receiver.objects.filter(user=user_id)  # 这里使用的是获取到的是id的在关联表中 存的也是id的值
         receiver.filter(id=receiver_user_id).delete()
         # TODO 考虑使用ajax 请求 请求成功后  在前端 进行重定向
         return redirect('/user/user_center_site/')  # 在去请求这个页面 进行页面的刷新 返回
+
+    def ajax_post(self, request, user):
+        """修改默认的收货地址"""
+        name = request.GET.get('name')
+        telephone = request.GET.get('telephone')
+        address = request.GET.get('address').strip()
+        user.receiver_name = name
+        user.telephone_num = telephone
+        user.address = address
+        user.save()
+        content = {'name': name, 'telephone': telephone, 'address': address}
+        return JsonResponse(content)
 
 
 class SendSuccessView(View):

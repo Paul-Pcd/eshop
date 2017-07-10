@@ -37,3 +37,11 @@ def paginator(goods_category, current, ordering, current_page, page):
     return page_str
 
 
+@register.simple_tag
+def ordering(oid):
+    if oid == 1:
+        return 1
+    elif oid == 2:
+        return 2
+    else:
+        return 1

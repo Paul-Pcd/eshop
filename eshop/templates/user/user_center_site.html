@@ -7,11 +7,29 @@
         <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
     {% endblock js %}
     <div class="right_content clearfix">
+    <style>
+        .success{
+            width: 100%;height: 50px;background-color: #5bc0de; color: red;font-size: 30px;
+        }
+    </style>
+        <div>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">
+                            {{ message|safe }}
+                            <a href="#" class="close"> </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
         <h3 class="common_title2">默认收货地址</h3>
         <div class="site_con">
             <dl>
                 <dt>当前地址:</dt>
-                <dd id="moren">{{ user_info_list.receiver_name }}&nbsp;&nbsp; 海淀区 &nbsp;&nbsp;{{ user_info_list.address }}&nbsp;&nbsp;
+                <dd id="moren">{{ user_info_list.receiver_name }}&nbsp;&nbsp; 海淀区
+                    &nbsp;&nbsp;{{ user_info_list.address }}&nbsp;&nbsp;
                     （{{ user_info_list.receiver_name }} 收）&nbsp;&nbsp; {{ user_info_list.telephone_number }}</dd>
             </dl>
             {% for info in receiver_info %}
@@ -51,7 +69,7 @@
                         var data = {'name': name, 'telephone': telephone, 'address': address};
                         $.get('{% url 'user:modify_address' %}', data, function (data) {
                             console.log(data);
-                           $('#moren').html(data.name +'&nbsp;&nbsp; 海淀区 &nbsp;&nbsp;'+data.address + '&nbsp;&nbsp;'+'（'+data.name +'收）&nbsp;&nbsp;'+data.telephone )
+                            $('#moren').html(data.name + '&nbsp;&nbsp; 海淀区 &nbsp;&nbsp;' + data.address + '&nbsp;&nbsp;' + '（' + data.name + '收）&nbsp;&nbsp;' + data.telephone)
                         });
                     }
                 })

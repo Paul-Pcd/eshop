@@ -4,9 +4,9 @@ from django.views.generic import View
 from django.contrib.auth.models import make_password
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import Q
+from django.contrib import messages
 
 from .models import UserProfile, Receiver, EmailVerifyRecord
 from .forms import RegisterForm, LoginForm, ReceiverForm, ModifyForm
@@ -136,8 +136,9 @@ class UserCenterInfoView(View):
 
     @method_decorator(check_auth)
     def get(self, request):
-        user_id = request.session.get('user_id') # 获取用户的id 来区分不同的用户 在redis中
-        recently_browsed = UseRedis.read_from_cache(user_id)
+        url_id = request.GET.get('url_id')  # 控制用户中心的高高亮
+        user_id = request.session.get('user_id')  # 获取用户的id 来区分不同的用户 在redis中
+        recently_browsed = UseRedis.read_from_cache(user_id,'recently_browsed')
         if recently_browsed is not None:
             recently_browsed_list = []
             for item in recently_browsed:
@@ -150,29 +151,13 @@ class UserCenterInfoView(View):
             # TODO 这里怎么把 通过redirect  把错误的信息带回去  也就是 解决通过后台进行登陆的是后 拿不到session中的值
             return redirect('/user/login/')
 
-    # @method_decorator(check_auth)
-    # def get(self, request):
-    #     recently_browsed = request.session.get('recently_browsed','').split('/')
-    #     for item in recently_browsed:
-    #         if len(item) == 0:
-    #             recently_browsed.remove(item)
-    #     recently_browsed_list = []
-    #     for item in recently_browsed:
-    #         recently_browsed_list.append(GoodsInfo.objects.get(id=item))
-    #     try:
-    #         user_id = request.session.get('user_id')
-    #         user_info_list = UserProfile.objects.get(id=user_id)
-    #         return render(request, 'user/user_center_info.html', locals())
-    #     except Exception as err:
-    #         # TODO 这里怎么把 通过redirect  把错误的信息带回去  也就是 解决通过后台进行登陆的是后 拿不到session中的值
-    #         return redirect('/user/login/')
-
 
 class UserCenterOrderView(View):
     """用户订单信息视图类"""
 
     @method_decorator(check_auth)
     def get(self, request):
+        url_id = request.GET.get('url_id')  # 控制用户中心的高高亮
         user_id = request.session.get('user_id')
         user_info_list = UserProfile.objects.get(id=user_id)
         return render(request, 'user/user_center_order.html', locals())
@@ -183,18 +168,20 @@ class UserCenterSiteView(View):
 
     def get_user(self, request):
         """获取用户的信息"""
-        user_id = request.session.get('user_id')
 
+        user_id = request.session.get('user_id')
         user_info_list = UserProfile.objects.get(id=user_id)  # 获取当前用户的信息
         receiver_info = Receiver.objects.filter(user=user_info_list)  # 返回收货人信息
         return user_info_list, receiver_info
 
     @method_decorator(check_auth)
     def get(self, request):
+        url_id = request.GET.get('url_id')  # 控制用户中心的高高亮
         user_info_list, receiver_info = self.get_user(request)
         return render(request, 'user/user_center_site.html', locals())
 
     def post(self, request, ):
+        url_id = request.GET.get('url_id')  # 控制用户中心的高高亮
         user_info_list, receiver_info = self.get_user(request)
         receiver_form = ReceiverForm(request.POST)
         if receiver_form.is_valid():
@@ -214,6 +201,8 @@ class UserCenterSiteView(View):
         receiver.address = request.POST.get('address')
         receiver.telephone = request.POST.get('telephone')
         receiver.save()
+        # 使用消息框架通知用户增加成功  配合使用信号 来通知 数据库添加删除成功on个  然后根据结果来发送不同的的消息
+        messages.success(request, '添加成功')
 
 
 class ModifyAddressView(View):
@@ -226,7 +215,7 @@ class ModifyAddressView(View):
         user_id = request.session.get('user_id')
         user = UserProfile.objects.get(id=user_id)
         if request.is_ajax():
-            return self.ajax_post(request,user)  # 调用ajax请求的方法
+            return self.ajax_post(request, user)  # 调用ajax请求的方法
         receiver_user_id = request.GET.get("id")
         receiver = Receiver.objects.filter(user=user_id)  # 这里使用的是获取到的是id的在关联表中 存的也是id的值
         receiver.filter(id=receiver_user_id).delete()
@@ -324,3 +313,25 @@ class ModifyView(View):
                 return render(request, 'user/reset_password.html', locals())  # 返回重置密码页面
         else:
             return render(request, 'user/reset_password.html', locals())  # 返回表单中验证的错误信息
+
+
+"""
+使用session来进行浏览商品的保存
+ # @method_decorator(check_auth)
+    # def get(self, request):
+    #     recently_browsed = request.session.get('recently_browsed','').split('/')
+    #     for item in recently_browsed:
+    #         if len(item) == 0:
+    #             recently_browsed.remove(item)
+    #     recently_browsed_list = []
+    #     for item in recently_browsed:
+    #         recently_browsed_list.append(GoodsInfo.objects.get(id=item))
+    #     try:
+    #         user_id = request.session.get('user_id')
+    #         user_info_list = UserProfile.objects.get(id=user_id)
+    #         return render(request, 'user/user_center_info.html', locals())
+    #     except Exception as err:
+    #         # TODO 这里怎么把 通过redirect  把错误的信息带回去  也就是 解决通过后台进行登陆的是后 拿不到session中的值
+    #         return redirect('/user/login/')
+
+"""

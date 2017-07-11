@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'shop',
     'tinymce',
     'haystack',
+    'shop_cart',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -87,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',  # 配置mysql的引擎
         'NAME': 'eshop',  # 自己创建好的数据库的名称
         'USER': 'root',  # 用户名
-        'PASSWORD': '1234',  # 数据库密码
+        'PASSWORD': '12345',  # 数据库密码
         'HOST': '127.0.0.1',  # 主机地址
         'PORT': '3306',  # 端口号  是字符串类型的
     }
@@ -152,10 +153,10 @@ HAYSTACK_CONNECTIONS = {
         'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
     }
 }
-#当添加、修改、删除数据时，自动生成索引
+# 当添加、修改、删除数据时，自动生成索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
-#配置redis使用缓存
+# 配置redis使用缓存
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -166,6 +167,95 @@ CACHES = {
     }
 }
 # 配置超时时间
-REDIS_TIMEOUT=7*24*60*60
-CUBES_REDIS_TIMEOUT=60*60
-NEVER_REDIS_TIMEOUT=365*24*60*60
+ONEDAY_TIMEOUT = 24 * 60 * 60
+REDIS_TIMEOUT = 7 * 24 * 60 * 60
+CUBES_REDIS_TIMEOUT = 60 * 60
+NEVER_REDIS_TIMEOUT = 365 * 24 * 60 * 60
+
+# 配置日志文件的使用
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {  # 格式化输出 日志的内容
+        'standard': {
+            'format': '%(asctime)s [%(threadName)s:%(thread)d] [%(name)s:%(lineno)d] '
+                      '[%(module)s:%(funcName)s] [%(levelname)s]- %(message)s'}
+        # 日志格式
+    },
+    'filters': {  # 过滤器
+    },
+    'handlers': {  # 定义hanlers 对应的日志级别 #处理器
+        'mail_admins': {
+            'level': 'ERROR',  # 级别是错误进行日志的输出
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
+        'default': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'log/all.log',  # 日志输出文件
+            'maxBytes': 1024 * 1024 * 5,  # 文件大小
+            'backupCount': 5,  # 备份份数
+            'formatter': 'standard',  # 使用哪种formatters日志格式
+        },
+        'error': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'log/error.log',
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'info': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'log/info.log',
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'console': {  # 打印到控制台
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'request_handler': {  # 当有请求错误的时候 就会触发这个错误的日志
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'log/script.log',
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'scprits_handler': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'log/script.log',
+            'maxBytes': 1024 * 1024 * 5,
+            'backupCount': 5,
+            'formatter': 'standard',
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['default', 'console'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
+        'django.request': {
+            'handlers': ['request_handler'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'scripts': {
+            'handlers': ['scprits_handler'],
+            'level': 'INFO',
+            'propagate': False
+        },
+        'eshop.views': {
+            'handlers': ['default', 'info', 'error'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
+    }
+}

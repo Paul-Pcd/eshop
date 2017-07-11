@@ -1,21 +1,23 @@
 /**
  * Created by Administrator on 2017/7/9.
  */
-$(function () {
+$(function() {
     var $num_show = $('.num_show');
     var $total_price = $('.total em')
     var goods_price = parseFloat($('.show_pirze em').text());
-    var $goods_ku_cun = $('.show_kucun');
-    $('.add').click(function () {
+    var goods_store = parseInt($('.show_kucun em').text());
+    $('.add').click(function() {
+        //点击加按钮
         var goods_num = parseInt($num_show.val());
-        if (goods_num >= 20) {
-            alert("亲最多只能购买20个,给别人留点");
+        if (goods_num > goods_store) {
+            alert("亲只有这么多了,改天再来买");
         } else {
             var total_num = parseInt($num_show.val(goods_num + 1).val());
             get_total_price(total_num)
         }
     });
-    $('.minus').click(function () {
+    $('.minus').click(function() {
+        //点击减按钮
         var goods_num = parseInt($num_show.val());
         if (goods_num <= 1) {
             alert("亲就买一个吧 生活不易啊");
@@ -24,8 +26,9 @@ $(function () {
             get_total_price(total_num)
         }
     });
-    // 自己输入数量的判断
-    $num_show.blur(function () {
+
+    $num_show.blur(function() {
+        // 用户自己输入数值的判断
         var inpunt_total_num = parseInt($num_show.val())
         if (isNaN(inpunt_total_num)) {
             alert("亲请输入一个整数可以啊");
@@ -36,29 +39,23 @@ $(function () {
             $num_show.val(1);
             inpunt_total_num = 1;
         } else {
-            if (inpunt_total_num >= 20) {
-                alert("亲最多只能购买20个,给别人留点");
-                $num_show.val(20);
-                inpunt_total_num = 20;
+            if (inpunt_total_num >= goods_store) {
+                alert("亲只有这么多了,改天再来买");
+                $num_show.val(goods_store);
+                inpunt_total_num = goods_store;
             }
         }
         get_total_price(inpunt_total_num)
-
     });
-    // 计算总的价格
+
     function get_total_price(total_num) {
+        //计算总的价格
         var total_price = new Number(total_num * goods_price).toFixed(2);
         $total_price.html(total_price + "元");
     }
 
-    // 发送ajax请你
-    function ajax() {
-        $.get("{% url 'shop:detail' goods_info.id %}", function (data) {
-            alert(data);
-        });
-    }
 
-    // 加入购物车
+    // 加入购物车 动画
     var $add_cart = $('#add_cart');
     var $show_count = $('#show_count');
     var $add_jump = $('.add_jump');
@@ -67,19 +64,11 @@ $(function () {
 
     var $to_top = $show_count.offset().top;
     var $to_left = $show_count.offset().left;
-    $add_cart.click(function () {
-        var goods_total_num = parseInt($('.num_show').val());
-        var goods_url = $("input[name='hidden']").val();
+    $add_cart.click(function() {
+        // 点击添加到购物车按钮
+        var buy_num = parseInt($('.num_show').val()); // 获取商品输入框中总的数量
+        var add_cart_url = $('#add_cart_url').val();
         var $show_count = $('#show_count');
-        $.get(goods_url, function (data) {
-            num = data.data;
-            $('.show_kucun em').html(num);
-            if (goods_total_num < num) {
-                count = parseInt($show_count.html());
-                total_num = count + goods_total_num;
-                $show_count.html(total_num);
-            }
-        });
         $add_jump.css({
             'left': $add_left + 80,
             'top': $add_top + 10,
@@ -90,14 +79,17 @@ $(function () {
                 'top': $to_top + 7
             },
             "fast",
-            function () {
-                $(".add_jump").fadeOut('fast', function () {
-                    // $('#show_count').html(2);
-                    // $(".add_jump").css({
-                    //     'left': add_jump_left,
-                    //     'top':add_jump_top,
-                    //     'display': 'none'
-                    // });
+            function() {
+                $(".add_jump").fadeOut('fast', function() {
+                    cart_count = parseInt($show_count.html());
+                    var total_num = cart_count + buy_num;
+                    $show_count.html(total_num);
+                    data = { 'total_num': total_num, 'buy_num': buy_num};
+                    $.get(add_cart_url, data, function(data) {
+                        // 发送ajax请求 添加购物车
+                        console.log(data);
+                    });
+
                 });
 
             });

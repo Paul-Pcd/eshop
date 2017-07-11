@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -23,8 +22,25 @@ urlpatterns = [
     url(r'^shop/', include('shop.urls', namespace='shop')),
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^search/', include('haystack.urls')),
+    url(r'^shop_cart/', include('shop_cart.urls', namespace='shop_cart')),
     # url('^search/$', MySearchView.as_view())
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # if settings.DEBUG:

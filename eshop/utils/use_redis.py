@@ -13,8 +13,8 @@ CON = get_redis_connection('default')
 
 class UseRedis():
     @classmethod
-    def read_from_cache(cls, user_name):
-        key = 'user_id_' + str(user_name)
+    def read_from_cache(cls, user_name, key):
+        key =str(user_name) +"-"+ str(key)
         value = CON.get(key)
         if value == None:
             data = None
@@ -24,9 +24,9 @@ class UseRedis():
 
     # write cache user id
     @classmethod
-    def write_to_cache(cls, user_name, content):
+    def write_to_cache(cls, user_name,key, content):
         content = json.dumps(content)
-        key = 'user_id_' + str(user_name)
+        key = str(user_name) +"-"+ str(key)
         CON.set(key, content)
 
 

@@ -34,7 +34,7 @@
                     <a href="javascript:;" class="minus fl">-</a>
                 </div>
             </li>
-            <li class="col07">25.80元</li>
+            <li class="col07"><em>25.80</em>元</li>
             <li class="col08"><a href="javascript:;">删除</a></li>
         </ul>
     {% endfor %}
@@ -42,7 +42,7 @@
 
 
     <ul class="settlements">
-        <li class="col01"><input type="checkbox" name="" checked=""></li>
+        <li class="col01"><input type="checkbox" name="" checked="checked"></li>
         <li class="col02">全选</li>
         <li class="col03">合计(不含运费)：<span>¥</span><em>０</em><br>共计<b class="total_num">０</b>件商品</li>
         <li class="col04"><a href="place_order.html">去结算</a></li>
@@ -50,27 +50,68 @@
     <script>
         $(function () {
             var $ul = $('.cart_list_td');
+            var $total_price = $('.settlements .col03 em');
+            var $bottom_total_num = $('.settlements .col03 .total_num');
+            var $top_total_num = $('.total_count em');
             var total_price = 0;
-            total_num = 0;
-            $ul.each(function (index) {
-                var $li = $ul.eq(index).children();
-                var checked = $li.eq(0).children().prop('checked');
-                console.log(checked);
-                var price = parseFloat($li.eq(4).children().text());  //获取商品的单价
-                var num = parseInt($li.eq(5).find('.num_show').val());  //获取商品的个数
-                var min_price = parseFloat(new Number(num * price).toFixed(2));  // 计算每个商品的总价钱
-                $li.eq(6).text(min_price + "元");
-                if (checked){
-                    total_price = total_price + min_price;
-                    $('.settlements .col03 em').text(total_price); // 计算总的价格
-                }
+            var total_num = 0;
 
-                total_num = index + 1;
-            });
-            $('.settlements .col03 .total_num').text(total_num); // 显示底部总的数量
-            $('.total_count em').text(total_num);  // 显示顶部总的数量
+            function get_total_price() {
+                // 计算购车中总的商品的价格
+                $ul.each(function (index) {
+                    var $li = $ul.eq(index).children();
+                    var checked = $li.eq(0).children().prop('checked');
+                    var price = parseFloat($li.eq(4).children().text());  //获取商品的单价
+                    var num = parseInt($li.eq(5).find('.num_show').val());  //获取商品的个数
+                    var min_price = parseFloat(new Number(num * price).toFixed(2));  // 计算每个商品的总价钱
+                    $li.eq(6).children().text(min_price);
+                    if (checked) {
+                        total_price = total_price + min_price;
+                        $total_price.text(total_price); // 计算总的价格
+                    }
+
+                    total_num = index + 1;
+                });
+                $bottom_total_num.text(total_num); // 显示底部总的数量
+                $top_total_num.text(total_num);  // 显示顶部总的数量
+            }
+
+            get_total_price(); // 调用计算总商品价格的函数
+
             // 在外部做判断　默认的情况下是全部选中的　页面跳转过来就要计算出总的价格　然后再去计算当每个的
             //　ｃｈｅｃｋｅｄ　属性　为ｆａｌｓｅ的时候　在总的价格上减去当前商品的　底部数量也要减１
+            $ul.each(function (index) {
+                // 检测每个checkbox的值根据值来进行总金额的计算
+                var $li = $ul.eq(index).children();
+                $li.eq(0).children().click(function () {
+                    var mix_price = 0;
+                    if ($(this).prop('checked')) {  // 选中这个商品的话
+                        mix_price = parseFloat($li.eq(6).children().text()); // 获取到单件商品的小计价格
+                        total_price = parseFloat($total_price.text()) + mix_price; // 计算减去后的总价格
+                        total_num = parseInt($bottom_total_num.text()) + 1;
+                    } else { // 如果没有选中这个商品的话
+                        mix_price = parseFloat($li.eq(6).children().text()); // 获取到单件商品的小计价格
+                        total_price = parseFloat($total_price.text()) - mix_price; // 计算减去后的总价格
+                        total_num = parseInt($bottom_total_num.text()) - 1;
+                    }
+                    total_price = new Number(total_price).toFixed(2);
+                    $total_price.text(total_price);
+                    $bottom_total_num.text(total_num);
+                });
+            });
+            //全选按钮判断
+            var $total_checked = $('.settlements:first-child').children();
+            console.log($total_checked.prop('checked'));
+            console.log($total_checked);
+            $total_checked.click(function () {
+                if ($total_checked.prop('checked')) {
+                    alert('heheh');
+                    var $check_box = $('input:checkbox');
+                    console.log($check_box);
+                    get_total_price() // 调用计算总价格的函数
+                }
+            });
+
         });
     </script>
 {% endblock user_content %}

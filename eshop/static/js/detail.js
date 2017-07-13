@@ -84,10 +84,12 @@ $(function() {
                     cart_count = parseInt($show_count.html());
                     var total_num = cart_count + buy_num;
                     $show_count.html(total_num);
-                    data = { 'total_num': total_num, 'buy_num': buy_num};
+                    data = {'buy_num': buy_num};
                     $.get(add_cart_url, data, function(data) {
                         // 发送ajax请求 添加购物车
-                        console.log(data);
+                       if(data.statue === "0"){
+                           alert('服务器出错,添加错误')
+                       }
                     });
 
                 });

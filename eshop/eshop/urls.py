@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^search/', include('haystack.urls')),
     url(r'^shop_cart/', include('shop_cart.urls', namespace='shop_cart')),
+    url(r'^shop_order/', include('shop_order.urls', namespace='shop_order')),
     # url('^search/$', MySearchView.as_view())
 ]
 

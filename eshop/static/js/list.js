@@ -7,10 +7,12 @@ $(function () {
     $('.add_goods').click(function () {
         // 在列表也点击购物车
         var goods_num = parseInt($show_count.text());
-        var total_num = $show_count.text(goods_num + 1);
-        data = {'total_num': total_num, 'buy_num': 1};
+        $show_count.text(goods_num + 1);
+        data = {'buy_num': 1};
         $.get(add_url, data, function (data) {
-            console.log(data);
+            if (data.statue === "0") {
+                alert('服务器出错,添加错误')
+            }
         })
 
     });

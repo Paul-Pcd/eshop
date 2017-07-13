@@ -5,30 +5,94 @@ from django.views.generic import View
 from utils.use_redis import UseRedis
 from utils.my_logger import logger
 from .models import ShopCart
+from users.models import UserProfile
 
 
 # Create your views here.
+
+def save_total_num(buy_num, user_id):
+    total_num = UseRedis.read_from_cache(user_id, "total_num")  # 从redis中取出总数
+    if total_num is None:
+        total_num = 0
+    total_num = total_num + buy_num
+    UseRedis.write_to_cache(user_id, "total_num", total_num)  # 写入到redis中
+
+
 class AddCartView(View):
     """添加商品到购物车"""
 
     def get(self, request, nid):
         user_id = request.session.get('user_id')  # 获取用户的信息 每个用户对应自己自己购买的商品
         if request.is_ajax():
-            total_num = request.GET.get('total_num', 0)
             buy_num = request.GET.get('buy_num')
             if buy_num is not None:
-                cart = ShopCart.objects.filter(user_id=user_id, goods_info_id=nid).first()
-                if cart:
-                    cart.count += int(buy_num)
-                    cart.save()
-                else:
-                    ShopCart.objects.create(user_id=user_id, goods_info_id=nid, count=buy_num)
-                UseRedis.write_to_cache(user_id, "total_num", total_num)
-                content = {'statue': 200}
+                save_total_num(int(buy_num), user_id)
+                try:
+                    cart_obj = ShopCart.objects.filter(user_id=user_id, goods_info_id=nid).first()
+                    if cart_obj:
+                        cart_obj.count += int(buy_num)
+                        cart_obj.save()
+                    else:
+                        ShopCart.objects.create(user_id=user_id, goods_info_id=nid, count=buy_num)
+                    content = {'statue': "1"}
+                except Exception as err:
+                    logger.error(err)
+                    content = {'statue': "0"}
             else:
-                logger.info(total_num)
-                content = {'status': 500}
+                content = {'status': "0"}
             return JsonResponse(content)
+
+
+class UpdateCartview(View):
+    def get(self, request, nid):
+        if request.is_ajax():
+            user_id = request.session.get('user_id')  # 获取用户的信息 每个用户对应自己自己购买的商品
+            buy_num = request.GET.get('buy_num')  # 获取购买的数量
+            if buy_num is not None:
+                buy_num = int(buy_num)
+                try:
+                    cart_obj = ShopCart.objects.filter(goods_info_id=nid).first()
+                    before_goods_num = cart_obj.count  # 获取之前数据库中的数量然后计算更改的数量
+                    cart_obj.count = buy_num
+                    cart_obj.save()
+                    change_num = buy_num - before_goods_num  # 计算增加的数量
+                    save_total_num(change_num, user_id)
+                    content = {'statue': "1"}
+                except Exception as err:
+                    logger.error(err)
+                    content = {'statue': "0"}
+            else:
+                content = {'statue': "0"}
+            return JsonResponse(content)
+
+
+class DeleteGoodsView(View):
+    def get(self, request, nid):
+        user_id = request.session.get('user_id')
+        if request.is_ajax():
+            try:
+                cart_obj = ShopCart.objects.filter(goods_info_id=nid).first()
+                delete_num = (-cart_obj.count)
+                cart_obj.delete()
+                save_total_num(delete_num, user_id)
+                content = {'statue': '1'}
+            except Exception as err:
+                logger.error(err)
+                print(err)
+                content = {'statue': '0'}
+            return JsonResponse(content)
+
+
+class OrderView(View):
+    """订单页面"""
+
+    def post(self, request):
+        user_id = request.session.get("user_id")
+        user = UserProfile.objects.filter(id=user_id).first()
+        checkbox = request.POST.getlist('checkbox')
+        order_list = ShopCart.objects.filter(id__in=checkbox)
+        content = {'order_list': order_list, 'user': user}
+        return render(request, 'shop_cart/place_order.html', content)
 
 
 class MyCartView(View):

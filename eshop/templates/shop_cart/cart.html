@@ -20,21 +20,22 @@
     </ul>
     {% for item in cart_info %}
         <ul class="cart_list_td clearfix">
+
             <li class="col01"><input type="checkbox" name="" checked="checked"></li>
             <li class="col02"><img src="{{ MEDIA_URL }}{{ item.goods_info.goods_images }}"></li>
             <li class="col03">{{ item.goods_info.goods_name }}<br><em>{{ item.goods_info.goods_price }}元/{{ item.goods_info.goods_unit }}</em>
             </li>
             <li class="col04">{{ item.goods_info.goods_unit }}</li>
             <li class="col05"><em>{{ item.goods_info.goods_price }}</em>元</li>
-            te
             <li class="col06">
                 <div class="num_add">
                     <a href="javascript:;" class="add fl">+</a>
                     <input type="text" class="num_show fl" value="{{ item.count }}">
+                    <input type="hidden" class="add_cart_url" value="{% url 'shop_cart:add_cart' item.goods_info.id %}">
                     <a href="javascript:;" class="minus fl">-</a>
                 </div>
             </li>
-            <li class="col07"><em>25.80</em>元</li>
+            <li class="col07"><em>0</em>元</li>
             <li class="col08"><a href="javascript:;">删除</a></li>
         </ul>
     {% endfor %}
@@ -50,36 +51,48 @@
     <script>
         $(function () {
             var $ul = $('.cart_list_td');
-            var $total_price = $('.settlements .col03 em');
+            var $total_price = $('.settlements .col03 em'); // 总价格
             var $bottom_total_num = $('.settlements .col03 .total_num');
             var $top_total_num = $('.total_count em');
-            var total_price = 0;
-            var total_num = 0;
+            var $total_checked = $('.settlements .col01').children(); //全选按钮
+            var total_price = 0;  // 总价
+            var total_num = 0;  // 总数量
+
+            function format_num(num) {
+                //格式化计算后的数据
+                return parseFloat(new Number(num).toFixed(2));  // 计算每个商品的总价钱
+            }
+
+            function save_total_price(total_price) {
+                //保存总的金额
+                totalprice = format_num(total_price);
+                $total_price.text(totalprice);
+            }
+
+            function send_ajax(url, num) {
+                data = {'buy_num': num};
+                $.get(url, data, function (data) {
+
+                })
+            }
 
             function get_total_price() {
                 // 计算购车中总的商品的价格
                 $ul.each(function (index) {
                     var $li = $ul.eq(index).children();
-                    var checked = $li.eq(0).children().prop('checked');
                     var price = parseFloat($li.eq(4).children().text());  //获取商品的单价
                     var num = parseInt($li.eq(5).find('.num_show').val());  //获取商品的个数
-                    var min_price = parseFloat(new Number(num * price).toFixed(2));  // 计算每个商品的总价钱
+                    var min_price = format_num(num * price);  // 计算每个商品的总价钱
                     $li.eq(6).children().text(min_price);
-                    if (checked) {
-                        total_price = total_price + min_price;
-                        $total_price.text(total_price); // 计算总的价格
-                    }
-
+                    total_price = total_price + min_price;
                     total_num = index + 1;
                 });
+                save_total_price(total_price);
                 $bottom_total_num.text(total_num); // 显示底部总的数量
                 $top_total_num.text(total_num);  // 显示顶部总的数量
             }
 
             get_total_price(); // 调用计算总商品价格的函数
-
-            // 在外部做判断　默认的情况下是全部选中的　页面跳转过来就要计算出总的价格　然后再去计算当每个的
-            //　ｃｈｅｃｋｅｄ　属性　为ｆａｌｓｅ的时候　在总的价格上减去当前商品的　底部数量也要减１
             $ul.each(function (index) {
                 // 检测每个checkbox的值根据值来进行总金额的计算
                 var $li = $ul.eq(index).children();
@@ -87,31 +100,70 @@
                     var mix_price = 0;
                     if ($(this).prop('checked')) {  // 选中这个商品的话
                         mix_price = parseFloat($li.eq(6).children().text()); // 获取到单件商品的小计价格
-                        total_price = parseFloat($total_price.text()) + mix_price; // 计算减去后的总价格
-                        total_num = parseInt($bottom_total_num.text()) + 1;
+                        total_price = total_price + mix_price; // 计算减去后的总价格
+                        total_num = total_num + 1;
                     } else { // 如果没有选中这个商品的话
                         mix_price = parseFloat($li.eq(6).children().text()); // 获取到单件商品的小计价格
-                        total_price = parseFloat($total_price.text()) - mix_price; // 计算减去后的总价格
-                        total_num = parseInt($bottom_total_num.text()) - 1;
+                        total_price = total_price - mix_price; // 计算减去后的总价格
+                        total_num = total_num - 1;
+                        $total_checked.prop('checked', "");
                     }
-                    total_price = new Number(total_price).toFixed(2);
-                    $total_price.text(total_price);
+                    save_total_price(total_price);
                     $bottom_total_num.text(total_num);
                 });
             });
             //全选按钮判断
-            var $total_checked = $('.settlements:first-child').children();
-            console.log($total_checked.prop('checked'));
-            console.log($total_checked);
             $total_checked.click(function () {
+                var $check_box = $('input:checkbox');
+                total_price = 0;
+                total_num = 0;
+                console.log($check_box);
                 if ($total_checked.prop('checked')) {
-                    alert('heheh');
-                    var $check_box = $('input:checkbox');
-                    console.log($check_box);
+                    $check_box.prop('checked', 'true'); // 选中的check——box 全部设定为checked
                     get_total_price() // 调用计算总价格的函数
+                } else {
+                    $check_box.prop('checked', ''); // 选中的check——box 全部设定为checked
+                    $total_price.text(0);
+                    $bottom_total_num.text(0);
                 }
             });
 
+            // 商品数量加件的操作
+            $ul.each(function (index) {
+                var $li = $ul.eq(index).children();
+                $li.eq(5).find('.add').click(function () {
+                    // 这里还缺少一个库存的判断
+                    //点击添加一个商品的
+                    var current_num = parseInt($li.eq(5).find('.num_show').val());  //获取商品的个数
+                    $li.eq(5).find('.num_show').val(current_num + 1); //单件商品的总个数加1
+                    var mix_price = parseFloat($li.eq(6).children().text()); // 获取到单件商品的小计价格
+                    var price = parseFloat($li.eq(4).children().text());  //获取商品的单价
+                    mix_price = mix_price + price;
+                    mix_price = format_num(mix_price);
+                    $li.eq(6).children().text(mix_price); // 设定单件商品的小计价格
+                    total_price = total_price + price; // 计算加一个单件商品后的总价格
+                    save_total_price(total_price);
+                    var add_cart_url =  $li.eq(5).find('.add_cart_url').val();
+                    send_ajax(add_cart_url, 1)
+                });
+                $li.eq(5).find('.minus').click(function () {
+                    // 点击减去商品的时候
+                    var current_num = parseInt($li.eq(5).find('.num_show').val());  //获取商品的个数
+                    if (current_num <= 1) {
+                        return
+                    }
+                    $li.eq(5).find('.num_show').val(current_num - 1); //单件商品的总个数减1
+                    var mix_price = parseFloat($li.eq(6).children().text()); // 获取到单件商品的小计价格
+                    var price = parseFloat($li.eq(4).children().text());  //获取商品的单价
+                    mix_price = mix_price - price;
+                    mix_price = format_num(mix_price);
+                    $li.eq(6).children().text(mix_price); //设定单件商品的小计价格
+                    total_price = total_price - price; // 计算减一个单件商品后的总价格
+                    save_total_price(total_price);
+                    var add_cart_url =  $li.eq(5).find('.add_cart_url').val(); // 找到对应的url
+                    send_ajax(add_cart_url, -1)
+                });
+            });
         });
     </script>
 {% endblock user_content %}

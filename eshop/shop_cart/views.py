@@ -36,7 +36,7 @@ class MyCartView(View):
 
     def get(self, request):
         user_id = request.session.get('user_id')
-        cart_info = ShopCart.objects.filter(user_id=user_id)
+        cart_info = ShopCart.objects.filter(user_id=user_id).order_by('-id')
         content = {"cart_info": cart_info}
         return render(request, 'shop_cart/cart.html', content)
 

@@ -1738,3 +1738,4 @@ django.db.utils.IntegrityError: (1048, "Column 'user_id' cannot be null")
 2017-07-12 01:19:59,333 [Thread-3:140042496263936] [django.request:170] [base:get_response] [WARNING]- Not Found: /favicon.ico
 2017-07-12 13:13:54,789 [Thread-10:139971484440320] [django.request:170] [base:get_response] [WARNING]- Not Found: /favicon.ico
 2017-07-12 13:13:55,957 [Thread-14:139971501225728] [django.request:170] [base:get_response] [WARNING]- Not Found: /favicon.ico
+2017-07-12 16:15:54,642 [Thread-10:139999848302336] [django.request:170] [base:get_response] [WARNING]- Not Found: /favicon.ico

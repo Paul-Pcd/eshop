@@ -39,7 +39,7 @@ class IndexView(View):
 class DetailView(View):
     """详情页视图"""
 
-    def get(self, request, nid):
+    def get(self, request, nid): # nid  商品的id
         goods_num = 0  # 用户购物车中的商品的数量
         user_id = request.session.get('user_id')  # 获取用户的id 用来区别不同的用户 存入redis'
         goods_info = GoodsInfo.objects.filter(id=nid).first()
@@ -144,7 +144,7 @@ class ListView(View):
         return render(request, 'shop/list.html', content)
 
 # class DetailView(View):
-#     """详情页视图"""
+#     """采用session实现用户的浏览记录"""
 #
 #     def get(self, request, nid):
 #         goods_info = GoodsInfo.objects.filter(id=nid).first()

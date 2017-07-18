@@ -1,0 +1,108 @@
+{% extends 'user_base.html' %} {% block user_content %}
+    {% block css %}
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css">
+    {% endblock css %}
+    {% block js %}
+        <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
+    {% endblock js %}
+    <div class="right_content clearfix">
+        <div>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li class="{{ message.tags }}">
+                            {{ message|safe }}
+                            <a href="#" class="close"> </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <h3 class="common_title2">默认收货地址</h3>
+        <div class="site_con">
+            <dl>
+                <dt>当前地址:</dt>
+                <dd id="moren">{{ user_info_list.receiver_name }}&nbsp;&nbsp; 海淀区
+                    &nbsp;&nbsp;{{ user_info_list.address }}&nbsp;&nbsp;
+                    （{{ user_info_list.receiver_name }} 收）&nbsp;&nbsp; {{ user_info_list.telephone_number }}</dd>
+            </dl>
+            {% for info in receiver_info %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <p><span style="font-size: 18px" id="name{{ forloop.counter }}">{{ info.name }}</span>&nbsp;&nbsp;
+                            <span
+                                    style="margin-left: 30px"
+                                    id="telephone{{ forloop.counter }}">{{ info.telephone }}</span></p>
+                        <div id="address{{ forloop.counter }}">
+                            {{ info.address }}
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <input type="radio" name="address_check" class="pull-left">&nbsp;&nbsp;设置为默认地址
+                        <span class="pull-right"><a href="{% url 'user:modify_address' %}?id={{ info.id }}"
+                                                    class="btn btn-danger">删除</a></span>
+                        <span class="pull-right"><a type="button" class="btn btn-primary pull-right" data-toggle="modal"
+                                                    data-target="#myModal_1" style="margin-right: 10px">编辑</a></span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% include 'user/receiver_address.html' %}
+        {% include 'user/edite_address.html' %}
+    </div>
+    <script>
+        $(function () {
+            var $radio = $($(".site_con input[type='radio']"));
+            $radio.each(function (index) {
+                $radio.eq(index).click(function () {
+                    if ($radio.eq(index).prop('checked')) {
+                        var name = $('#name' + (index + 1)).text();
+                        var telephone = $('#telephone' + (index + 1)).text();
+                        var address = $('#address' + (index + 1)).text();
+                        var data = {'name': name, 'telephone': telephone, 'address': address};
+                        $.get('{% url 'user:modify_address' %}', data, function (data) {
+                            console.log(data);
+                            $('#moren').html(data.name + '&nbsp;&nbsp; 海淀区 &nbsp;&nbsp;' + data.address + '&nbsp;&nbsp;' + '（' + data.name + '收）&nbsp;&nbsp;' + data.telephone)
+                        });
+                    }
+                })
+            })
+        })
+    </script>
+{% endblock user_content %}
+
+
+
+
+{#下面是使用表格来显示的 现在改为了 使用面板来显示#}
+{##}
+{#      <h3 class="common_title2">收货人:</h3>#}
+{#        <div class="site_con">#}
+{#            <table class="table table-strip table-hover">#}
+{#                <tr>#}
+{#                    <td><input type="checkbox" name="check"></td>#}
+{#                    <td>编号</td>#}
+{#                    <td>收件人</td>#}
+{#                    <td>联系电话</td>#}
+{#                    <td>城市</td>#}
+{#                    <td>地址</td>#}
+{#                    <td>操作</td>#}
+{#                    >#}
+{#                </tr>#}
+{#                {% for info in receiver_info %}#}
+{#                    <tr>#}
+{#                        <td><input type="checkbox" name="check"></td>#}
+{#                        <td>{{ forloop.counter }}</td>#}
+{#                        <td>{{ info.name }}</td>#}
+{#                        <td>{{ info.telephone }}</td>#}
+{#                        <td>{{ info.city }}</td>#}
+{#                        <td>{{ info.address }}</td>#}
+{#                        <td><a href="">编辑</a></td>#}
+{#                        <td><a href="">删除</a></td>#}
+{#                        <td><a href="">设为默认</a></td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
+{#            </table>#}
+{#            {% include 'user/receiver_address.html' %}#}
+{#        </div>#}

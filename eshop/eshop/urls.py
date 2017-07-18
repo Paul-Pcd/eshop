@@ -18,4 +18,32 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^user/', include('users.urls', namespace='user')),
+    url(r'^shop/', include('shop.urls', namespace='shop')),
+    url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^search/', include('haystack.urls')),
+    url(r'^shop_cart/', include('shop_cart.urls', namespace='shop_cart')),
+    url(r'^shop_order/', include('shop_order.urls', namespace='shop_order')),
+    # url('^search/$', MySearchView.as_view())
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# if settings.DEBUG:
+#    urlpatterns += patterns('', url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT }),
+#         url(r'^static/(?P<path>.*)$','django.views.static.serve',{'document_root':settings.STATIC_ROOT}), )

@@ -1,0 +1,92 @@
+{% extends 'shop_base.html' %}
+
+{% block index_content %}
+    <div class="navbar_con">
+        <div class="navbar">
+            <h1 class="fl">全部商品分类</h1>
+            <ul class="navlist fl">
+                <li><a href="">首页</a></li>
+                <li class="interval">|</li>
+                <li><a href="">手机生鲜</a></li>
+                <li class="interval">|</li>
+                <li><a href="">抽奖</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="center_con clearfix">
+        <ul class="subnav fl">
+            <li><a href="{% url 'shop:list' category_list.0.id %}" class="fruit">{{ category_list.0.category_name }}</a></li>
+            <li><a href="{% url 'shop:list' category_list.1.id %}" class="seafood">{{ category_list.1.category_name }}</a></li>
+            <li><a href="{% url 'shop:list' category_list.2.id %}" class="meet">{{ category_list.2.category_name }}</a></li>
+            <li><a href="{% url 'shop:list' category_list.3.id %}" class="egg">{{ category_list.3.category_name }}</a></li>
+            <li><a href="{% url 'shop:list' category_list.4.id %}" class="vegetables">{{ category_list.4.category_name }}</a></li>
+            <li><a href="{% url 'shop:list' category_list.5.id %}" class="ice">{{ category_list.5.category_name }}</a></li>
+        </ul>
+
+        <div class="slide fl">
+            <ul class="slide_pics">
+                <li><img src="{{ STATIC_URL }}images/slide.jpg" alt="幻灯片"></li>
+                <li><img src="{{ STATIC_URL }}images/slide02.jpg" alt="幻灯片"></li>
+                <li><img src="{{ STATIC_URL }}images/slide03.jpg" alt="幻灯片"></li>
+                <li><img src="{{ STATIC_URL }}images/slide04.jpg" alt="幻灯片"></li>
+            </ul>
+            <div class="prev"></div>
+            <div class="next"></div>
+            <ul class="points"></ul>
+        </div>
+        <div class="adv fl">
+            <a href="#"><img src="{{ STATIC_URL }}images/adv01.jpg"></a>
+            <a href="#"><img src="{{ STATIC_URL }}images/adv02.jpg"></a>
+        </div>
+    </div>
+    {% for item in goods_list %}
+        <div class="list_model">
+            <div class="list_title clearfix">
+                <h3 class="fl" id="model0{{ forloop.counter }}">{{ item.goods_category }}</h3>
+                <div class="subtitle fl">
+                    <span>|</span>
+                    {% for item in item.click_num %}
+                        <a href="{% url 'shop:detail' item.id %}">{{ item.goods_name }}</a>
+                    {% endfor %}
+                </div>
+                <a href="{% url 'shop:list' item.goods_category.id %}" class="goods_more fr" id="fruit_more">查看更多 ></a>
+            </div>
+
+
+                <div class="goods_con clearfix">
+                    <div class="goods_banner fl"><img src="{{ STATIC_URL }}images/banner0{{ forloop.counter }}.jpg"></div>
+                    <ul class="goods_list fl">
+                        {% for item in item.new_list %}
+                         <li>
+                            <h4><a href="{% url 'shop:detail' item.id %}">{{ item.goods_name }}</a></h4>
+                            <a href="{% url 'shop:detail' item.id %}"><img src="{{ MEDIA_URL }}{{ item.goods_images }}"></a>
+                            <div class="prize">¥ {{ item.goods_price }}</div>
+                        </li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+                </div>
+
+    {% endfor %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/slideshow.js"></script>
+    <script type="text/javascript">
+        BCSlideshow('focuspic');
+        var oFruit = document.getElementById('fruit_more');
+        var oShownum = document.getElementById('show_count');
+
+        var hasorder = localStorage.getItem('order_finish');
+
+        if (hasorder) {
+            oShownum.innerHTML = '2';
+        }
+
+        oFruit.onclick = function () {
+            window.location.href = 'list.html';
+        }
+    </script>
+
+{% endblock index_content %}
+
+

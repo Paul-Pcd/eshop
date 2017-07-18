@@ -1,0 +1,150 @@
+{% extends 'shop_base.html' %}
+{% block shop_js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/list.js"></script>
+{% endblock shop_js %}
+{#{% load simpletag %}#}
+{% block index_content %}
+
+    {{ block.super }}
+
+    <div class="breadcrumb">
+        <a href="{% url 'shop:index' %}">全部分类</a>
+        <span>></span>
+        <a href="#">{{ goods_category.category_name }}</a>
+    </div>
+
+    <div class="main_wrap clearfix">
+        <div class="l_wrap fl clearfix">
+            <div class="new_goods">
+                <h3>新品推荐</h3>
+                <ul>
+                    <li>
+                        <a href="#"><img src="{{ STATIC_URL }}images/goods/goods001.jpg"></a>
+                        <h4><a href="#">进口柠檬</a></h4>
+                        <div class="prize">￥3.90</div>
+                    </li>
+                    <li>
+                        <a href="#"><img src="{{ STATIC_URL }}images/goods/goods002.jpg"></a>
+                        <h4><a href="#">玫瑰香葡萄</a></h4>
+                        <div class="prize">￥16.80</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="r_wrap fr clearfix">
+            <div class="sort_bar">
+                <a href="{% url 'shop:list_check' goods_category.id 1 0 %}"  {% if ordering == "0" %}
+                   class="active" {% endif %}>默认</a>
+                <a href="{% url 'shop:list_check' goods_category.id 1 1 %}"  {% if ordering == "1" %}
+                   class="active" {% endif %}>价格</a>
+                <a href="{% url 'shop:list_check' goods_category.id 1 2 %}" {% if ordering == "2" %}
+                   class="active" {% endif %}>人气</a>
+            </div>
+
+            <ul class="goods_type_list clearfix">
+                {% for item in page %}
+                    <li>
+                        <a href="{% url 'shop:detail' item.object.id %}"><img
+                                src="{{ MEDIA_URL }}{{ item.object.goods_images }}"></a>
+                        <h4><a href="{% url 'shop:detail' item.object.id %}">{{ item.object.goods_name }}</a></h4>
+                        <div class="operate">
+                            <span class="prize">￥{{ item.object.goods_price }}</span>
+                            <span class="unit">{{ item.object.goods_price }}/{{ item.object.goods_unit }}/点击:{{ item.object.goods_click }}</span>
+                            <a href="#" class="add_goods" title="加入购物车"></a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>啥也没找到</li>
+                {% endfor %}
+            </ul>
+
+            <div class="pagenation">
+
+                {% for pindex in page.paginator.page_range %}
+                    {% if pindex == page.number %}
+                        {{ pindex }}&nbsp;&nbsp;
+                    {% else %}
+                        <a href="?q={{ query }}&amp;page={{ pindex }}">{{ pindex }}</a>&nbsp;&nbsp;
+                    {% endif %}
+                {% endfor %}
+
+
+                {% if page.has_previous or page.has_next %}
+                    <div>
+                        {% if page.has_previous %}
+                            <a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo;
+                        Previous{% if page.has_previous %}</a>{% endif %}
+                        |
+                        {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}
+                        Next &raquo;{% if page.has_next %}</a>{% endif %}
+                    </div>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+{% endblock index_content %}
+
+{##}
+{# {% if page.has_previous %}#}
+{##}
+{#                    <a href="{% url 'shop:list_check' goods_category.id 1 ordering %}"#}
+{#                       style="background-color: #5bc0de"><<</a>#}
+{#                    <a href="{% url 'shop:list_check' goods_category.id page.previous_page_number ordering %}"#}
+{#                       style="background-color: #5bc0de"> 上一页 </a>#}
+{#                {% else %}#}
+{#                    <a> << </a>#}
+{#                    <a> 上一页 </a>#}
+{#                {% endif %}#}
+
+{##}
+{##}
+{# {% if current_goods_obj.has_next %}#}
+{#                    <a href="{% url 'shop:list_check' goods_category.id page.next_page_number ordering %}"#}
+{#                       style="background-color: #5bc0de"> 下一页 </a>#}
+{#                    <a href="{% url 'shop:list_check' goods_category.id paginator.num_pages ordering %}"#}
+{#                       style="background-color: #5bc0de"> << </a>#}
+{#                {% else %}#}
+{#                    <a> 下一页 </a>#}
+{#                    <a> << </a>#}
+{#                {% endif %}#}
+
+
+{#<h1>搜索&nbsp;<b>{{ query }}</b>&nbsp;结果如下：</h1>#}
+{#<ul>#}
+{#    {% for item in page %}   (注意这里面的对象的获取方式  )#}
+{#        <li>{{ item.object.id }}--{{ item.object.goods_name|safe }}</li>#}
+{#    {% empty %}#}
+{#        <li>啥也没找到</li>#}
+{#    {% endfor %}#}
+{#</ul>#}
+{#<hr>#}
+{##}
+
+{#{% for current in page.paginator.page_range %}#}
+{#    {% paginator page.object.id current ordering page.number paginator %}#}
+{#{% endfor %}#}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

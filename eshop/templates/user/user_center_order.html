@@ -1,0 +1,60 @@
+{% extends 'user_base.html' %}
+
+{% block user_content %}
+    <div class="right_content clearfix">
+        <h3 class="common_title2">全部订单</h3>
+        {% for item in current_page_order_inf0 %}
+            <ul class="order_list_th w978 clearfix">
+                <li class="col01">{{ item.order_time }}</li>
+                <li class="col02">订单号：{{ item.order_id }}</li>
+                <li class="col02 stress">{{ item.get_is_pay_display }}</li>
+            </ul>
+
+
+            <table class="order_list_table w980">
+                <tbody>
+                <tr>
+                    <td width="55%">
+                        {% for order_detail in item.orderdetail_set.all %}
+                            <ul class="order_goods_list clearfix">
+                                <li class="col01"><img src="{{ MEDIA_URL }}{{ order_detail.goods_info.goods_images }}">
+                                </li>
+                                <li class="col02">{{ order_detail.goods_info.goods_name|truncatechars:10 }}<em>{{ order_detail.price }}元/{{ order_detail.goods_info.goods_unit }}</em>
+                                </li>
+                                <li class="col03">{{ order_detail.count }}</li>
+                                <li class="col04">{{ order_detail.goods_price }}元</li>
+                            </ul>
+                        {% endfor %}
+                    </td>
+                    <td width="15%"><em>{{ item.total }}</em>元</td>
+                    <td width="15%">{{ item.get_is_pay_display }}</td>
+                    <td width="15%"><a href="{% url 'shop_cart:my_cart' %}" class="oper_btn">去付款</a></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        {% empty %}
+            <h3>暂时没有订单啊！！赶紧去买啊！！！</h3>
+        {% endfor %}
+        <div class="pagenation">
+            {% if current_page_order_inf0.has_previous %}
+                <a href="{% url 'user:user_center_order' %}?url_id=2&page={{ current_page_order_inf0.previous_page_number }}">
+                    <上一页
+                </a>
+            {% endif %}
+            {% for page_index in page_range %}
+                <a href="{% url 'user:user_center_order' %}?url_id=2&page={{ page_index }}"
+                   {% ifequal current_page page_index %}class="active"{% endifequal %}>{{ page_index }}</a>
+            {% endfor %}
+
+             {% if current_page_order_inf0.has_next %}
+                <a href="{% url 'user:user_center_order' %}?url_id=2&page={{ current_page_order_inf0.next_page_number }}">
+                    下一页>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock user_content %}
+

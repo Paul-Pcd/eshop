@@ -1,0 +1,14 @@
+
+
+    环境:
+        pycharm 2017
+        python 3.5
+        django 1.8.7
+        pillow
+        pymysql
+        redis
+        django-tinymce==2.6.0  富文本编辑器 用在admin中
+        三个用于分分词的包
+        django-haystack
+        whoosh
+        jieba

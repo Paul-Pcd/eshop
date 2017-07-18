@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block title %} 天天生鲜首页{% endblock title %} {% block js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/slide.js"></script>
+{% block shop_js %}{% endblock shop_js %}
+{% endblock js %} {% block content %}
+    <div class="search_bar clearfix">
+        <a href="{% url 'shop:index' %}" class="logo fl"><img src="{{ STATIC_URL }}images/logo.png"></a>
+        <div class="search_con fl">
+            <form method='get' action="/search/" target="_blank">
+                <input type="text" class="input_text fl" name="q" placeholder="搜索商品">
+                <input type="submit" class="input_btn fr" name="" value="搜索">
+            </form>
+
+        </div>
+        <div class="guest_cart fr">
+            <a href="{% url 'shop_cart:my_cart' %}" class="cart_name fl">我的购物车</a>
+            <div class="goods_count fl" id="show_count">{{ goods_num }}</div>
+        </div>
+    </div>
+    {% block index_content %} {% block index_content_title %}
+        <div class="navbar_con">
+            <div class="navbar clearfix">
+                <div class="subnav_con fl">
+                    <h1>全部商品分类</h1>
+                    <span></span>
+                    <ul class="subnav">
+                        <li><a href="{% url 'shop:list' category_list.0.id %}"
+                               class="fruit">{{ category_list.0.category_name }}</a></li>
+                        <li><a href="{% url 'shop:list' category_list.1.id %}"
+                               class="seafood">{{ category_list.1.category_name }}</a></li>
+                        <li><a href="{% url 'shop:list' category_list.2.id %}"
+                               class="meet">{{ category_list.2.category_name }}</a></li>
+                        <li><a href="{% url 'shop:list' category_list.3.id %}"
+                               class="egg">{{ category_list.3.category_name }}</a></li>
+                        <li><a href="{% url 'shop:list' category_list.4.id %}"
+                               class="vegetables">{{ category_list.4.category_name }}</a></li>
+                        <li><a href="{% url 'shop:list' category_list.5.id %}"
+                               class="ice">{{ category_list.5.category_name }}</a></li>
+                    </ul>
+                </div>
+                <ul class="navlist fl">
+                    <li><a href="">首页</a></li>
+                    <li class="interval">|</li>
+                    <li><a href="">手机生鲜</a></li>
+                    <li class="interval">|</li>
+                    <li><a href="">抽奖</a></li>
+                </ul>
+            </div>
+        </div>
+    {% endblock index_content_title %} {% endblock index_content %} {% endblock content %}

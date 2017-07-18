@@ -12,8 +12,11 @@ from .models import UserProfile, Receiver, EmailVerifyRecord
 from .forms import RegisterForm, LoginForm, ReceiverForm, ModifyForm
 from utils.email_send import send_email
 from utils.use_redis import UseRedis
+from utils.get_page import get_page
+
 from .decorate import check_auth
 from shop.models import GoodsInfo
+from shop_order.models import OrderMain
 
 
 # Create your views here.
@@ -69,7 +72,6 @@ class RegisterView(View):
         # 在后台再次判断 邮箱和用户名是否已经存在  存在就返回
         if UserProfile.objects.filter(Q(username=username) | Q(email=email)):
             err = "用户名或者邮箱已经存在"
-            print(err)
             return render(request, 'user/register.html', locals())
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
@@ -138,7 +140,7 @@ class UserCenterInfoView(View):
     def get(self, request):
         url_id = request.GET.get('url_id')  # 控制用户中心的高高亮
         user_id = request.session.get('user_id')  # 获取用户的id 来区分不同的用户 在redis中
-        recently_browsed = UseRedis.read_from_cache(user_id,'recently_browsed')
+        recently_browsed = UseRedis.read_from_cache(user_id, 'recently_browsed')
         if recently_browsed is not None:
             recently_browsed_list = []
             for item in recently_browsed:
@@ -159,8 +161,12 @@ class UserCenterOrderView(View):
     def get(self, request):
         url_id = request.GET.get('url_id')  # 控制用户中心的高高亮
         user_id = request.session.get('user_id')
-        user_info_list = UserProfile.objects.get(id=user_id)
+        current_page = int(request.GET.get('page',1))
+        order_main = OrderMain.objects.filter(user_id=user_id)
+        current_page_order_inf0, page_range = get_page(order_main, current_page, 1)
         return render(request, 'user/user_center_order.html', locals())
+
+
 
 
 class UserCenterSiteView(View):

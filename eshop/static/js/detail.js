@@ -29,7 +29,7 @@ $(function() {
 
     $num_show.blur(function() {
         // 用户自己输入数值的判断
-        var inpunt_total_num = parseInt($num_show.val())
+        var inpunt_total_num = parseInt($num_show.val());
         if (isNaN(inpunt_total_num)) {
             alert("亲请输入一个整数可以啊");
             $num_show.val(1);
@@ -39,7 +39,7 @@ $(function() {
             $num_show.val(1);
             inpunt_total_num = 1;
         } else {
-            if (inpunt_total_num >= goods_store) {
+            if (inpunt_total_num > goods_store) {
                 alert("亲只有这么多了,改天再来买");
                 $num_show.val(goods_store);
                 inpunt_total_num = goods_store;

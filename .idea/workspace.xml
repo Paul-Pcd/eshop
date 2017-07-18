@@ -2,62 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c999e8d2-0193-4507-b074-645141cda40a" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_auk2q4ltdyhh6ea6.seg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_bzbchcktx8djf8rk.seg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_gkrn2giunaq0tneg.seg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_npb0rivzcov2c1u2.seg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_p6cd93rfxxbiwpuo.seg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/_MAIN_61.toc" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_1yavdwlnq1lro2b8.seg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_7l7m83k23n5rsxtm.seg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_8bpfzlw0jm15fyz0.seg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_joy6zzxdek9hoeuf.seg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/MAIN_u92n9l74vhby5l1o.seg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/eshop/whoosh_index/_MAIN_221.toc" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/eshop/.idea/dataSources.local.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/.idea/dataSources/924a74d8-088d-40e9-be84-fa4ceaccca80.xml" afterPath="$PROJECT_DIR$/eshop/.idea/dataSources/924a74d8-088d-40e9-be84-fa4ceaccca80.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/.idea/eshop.iml" afterPath="$PROJECT_DIR$/eshop/.idea/eshop.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/.idea/misc.xml" afterPath="$PROJECT_DIR$/eshop/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/.idea/workspace.xml" afterPath="$PROJECT_DIR$/eshop/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/.vs/VSWorkspaceState.json" afterPath="$PROJECT_DIR$/eshop/.vs/VSWorkspaceState.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/eshop/__init__.py" afterPath="$PROJECT_DIR$/eshop/eshop/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/eshop/settings.py" afterPath="$PROJECT_DIR$/eshop/eshop/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/eshop/urls.py" afterPath="$PROJECT_DIR$/eshop/eshop/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/readme" afterPath="$PROJECT_DIR$/eshop/readme" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop/models.py" afterPath="$PROJECT_DIR$/eshop/shop/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop/search_indexes.py" afterPath="$PROJECT_DIR$/eshop/shop/search_indexes.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop/search_view.py" afterPath="$PROJECT_DIR$/eshop/shop/search_view.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop/templatetags/__init__.py" afterPath="$PROJECT_DIR$/eshop/shop/templatetags/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop/templatetags/simpletag.py" afterPath="$PROJECT_DIR$/eshop/shop/templatetags/simpletag.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop/urls.py" afterPath="$PROJECT_DIR$/eshop/shop/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop/views.py" afterPath="$PROJECT_DIR$/eshop/shop/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/log/all.log" afterPath="$PROJECT_DIR$/eshop/log/all.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/log/error.log" afterPath="$PROJECT_DIR$/eshop/log/error.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/log/info.log" afterPath="$PROJECT_DIR$/eshop/log/info.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/log/script.log" afterPath="$PROJECT_DIR$/eshop/log/script.log" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop_cart/views.py" afterPath="$PROJECT_DIR$/eshop/shop_cart/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop_order/admin.py" afterPath="$PROJECT_DIR$/eshop/shop_order/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop_order/models.py" afterPath="$PROJECT_DIR$/eshop/shop_order/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop_order/urls.py" afterPath="$PROJECT_DIR$/eshop/shop_order/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/shop_order/views.py" afterPath="$PROJECT_DIR$/eshop/shop_order/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/static/css/main.css" afterPath="$PROJECT_DIR$/eshop/static/css/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/static/css/reset.css" afterPath="$PROJECT_DIR$/eshop/static/css/reset.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/static/js/detail.js" afterPath="$PROJECT_DIR$/eshop/static/js/detail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/static/js/register.js" afterPath="$PROJECT_DIR$/eshop/static/js/register.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/static/js/slide.js" afterPath="$PROJECT_DIR$/eshop/static/js/slide.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/base.html" afterPath="$PROJECT_DIR$/eshop/templates/base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/search/indexes/shop/goodsinfo_text.txt" afterPath="$PROJECT_DIR$/eshop/templates/search/indexes/shop/goodsinfo_text.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/search/search.html" afterPath="$PROJECT_DIR$/eshop/templates/search/search.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/shop/detail.html" afterPath="$PROJECT_DIR$/eshop/templates/shop/detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/shop/index.html" afterPath="$PROJECT_DIR$/eshop/templates/shop/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/shop/list.html" afterPath="$PROJECT_DIR$/eshop/templates/shop/list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/shop_base.html" afterPath="$PROJECT_DIR$/eshop/templates/shop_base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/active.html" afterPath="$PROJECT_DIR$/eshop/templates/user/active.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/edite_address.html" afterPath="$PROJECT_DIR$/eshop/templates/user/edite_address.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/forget_password.html" afterPath="$PROJECT_DIR$/eshop/templates/user/forget_password.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/login.html" afterPath="$PROJECT_DIR$/eshop/templates/user/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/place_order.html" afterPath="$PROJECT_DIR$/eshop/templates/user/place_order.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/receiver_address.html" afterPath="$PROJECT_DIR$/eshop/templates/user/receiver_address.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/register.html" afterPath="$PROJECT_DIR$/eshop/templates/user/register.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/reset_password.html" afterPath="$PROJECT_DIR$/eshop/templates/user/reset_password.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/send_success.html" afterPath="$PROJECT_DIR$/eshop/templates/user/send_success.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/user_center_info.html" afterPath="$PROJECT_DIR$/eshop/templates/user/user_center_info.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/shop_cart/cart.html" afterPath="$PROJECT_DIR$/eshop/templates/shop_cart/cart.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/shop_cart/place_order.html" afterPath="$PROJECT_DIR$/eshop/templates/shop_cart/place_order.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/user_center_order.html" afterPath="$PROJECT_DIR$/eshop/templates/user/user_center_order.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user/user_center_site.html" afterPath="$PROJECT_DIR$/eshop/templates/user/user_center_site.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/templates/user_base.html" afterPath="$PROJECT_DIR$/eshop/templates/user_base.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/users/decorate.py" afterPath="$PROJECT_DIR$/eshop/users/decorate.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/users/forms.py" afterPath="$PROJECT_DIR$/eshop/users/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/users/middleware.py" afterPath="$PROJECT_DIR$/eshop/users/middleware.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/users/urls.py" afterPath="$PROJECT_DIR$/eshop/users/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/users/views.py" afterPath="$PROJECT_DIR$/eshop/users/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/utils/email_send.py" afterPath="$PROJECT_DIR$/eshop/utils/email_send.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/utils/my_print.py" afterPath="$PROJECT_DIR$/eshop/utils/my_print.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/utils/use_redis.py" afterPath="$PROJECT_DIR$/eshop/utils/use_redis.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eshop/备忘录" afterPath="$PROJECT_DIR$/eshop/备忘录" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -112,13 +83,13 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/eshop" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -148,24 +119,24 @@
   <component name="ToolWindowManager">
     <frame x="52" y="-4" width="1314" height="772" extended-state="6" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24960753" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25274727" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>

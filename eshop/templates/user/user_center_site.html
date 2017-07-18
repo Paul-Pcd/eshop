@@ -7,11 +7,6 @@
         <script type="text/javascript" src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
     {% endblock js %}
     <div class="right_content clearfix">
-    <style>
-        .success{
-            width: 100%;height: 50px;background-color: #5bc0de; color: red;font-size: 30px;
-        }
-    </style>
         <div>
             {% if messages %}
                 <ul class="messages">
@@ -55,7 +50,6 @@
         </div>
         {% include 'user/receiver_address.html' %}
         {% include 'user/edite_address.html' %}
-
     </div>
     <script>
         $(function () {
@@ -79,13 +73,6 @@
 {% endblock user_content %}
 
 
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <button class=""></button>
-    </div>
-
-</div>
 
 
 {#下面是使用表格来显示的 现在改为了 使用面板来显示#}

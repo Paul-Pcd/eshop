@@ -6,15 +6,16 @@
 # @File    : use_redis.py
 # @Software: PyCharm
 from django.conf import settings
-# from django.core.cache import cache
 import json
 from django_redis import get_redis_connection
+
 CON = get_redis_connection('default')
+
 
 class UseRedis():
     @classmethod
     def read_from_cache(cls, user_name, key):
-        key =str(user_name) +"-"+ str(key)
+        key = str(user_name) + "-" + str(key)
         value = CON.get(key)
         if value == None:
             data = None
@@ -24,9 +25,7 @@ class UseRedis():
 
     # write cache user id
     @classmethod
-    def write_to_cache(cls, user_name,key, content):
+    def write_to_cache(cls, user_name, key, content):
         content = json.dumps(content)
-        key = str(user_name) +"-"+ str(key)
+        key = str(user_name) + "-" + str(key)
         CON.set(key, content)
-
-

@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'tinymce',
     'haystack',
     'shop_cart',
+    'shop_order',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -167,7 +168,7 @@ CACHES = {
     }
 }
 # 配置超时时间
-ONEDAY_TIMEOUT = 24 * 60 * 60
+TWODAY_TIMEOUT = 2*24 * 60 * 60
 REDIS_TIMEOUT = 7 * 24 * 60 * 60
 CUBES_REDIS_TIMEOUT = 60 * 60
 NEVER_REDIS_TIMEOUT = 365 * 24 * 60 * 60

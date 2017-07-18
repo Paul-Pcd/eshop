@@ -1,9 +1,9 @@
 {% extends 'user_base.html' %}
 {% block title %}
-    天天生鲜－购物车
+    天天生鲜－订单中心
 {% endblock title %}
 {% block user_title %}
-    购物车
+    订单中心
 {% endblock user_title %}
 {% block user_center %}
 {% endblock user_center %}
@@ -16,7 +16,8 @@
         <dl>
             <dt>寄送到：</dt>
             <dd><input type="radio" name="" checked="">{{ user.city }}&nbsp;&nbsp;&nbsp;{{ user.address }}&nbsp;&nbsp;&nbsp;({{ user.username }}收&nbsp;&nbsp;&nbsp;{{ user.telephone }})
-       <br>         北京市 海淀区 东北旺西路8号中关村软件园 （李思 收） 182****7528</dd>
+                <br> 北京市 海淀区 东北旺西路8号中关村软件园 （李思 收） 182****7528
+            </dd>
         </dl>
         <a href="user_center_site.html" class="edit_site">编辑收货地址</a>
 
@@ -50,7 +51,7 @@
             <ul class="goods_list_td clearfix">
                 <li class="col01">{{ forloop.counter }}</li>
                 <li class="col02"><img src="{{ MEDIA_URL }}{{ item.goods_info.goods_images }}"></li>
-                <li class="col03">{{ item.goods_info.goods_name|truncatewords:2 }}</li>
+                <li class="col03">{{ item.goods_info.goods_name|truncatechars:10 }}</li>
                 <li class="col04">{{ item.goods_info.goods_unit }}</li>
                 <li class="col05"><em>{{ item.goods_info.goods_price }}</em>元</li>
                 <li class="col06">{{ item.count }}</li>
@@ -60,19 +61,20 @@
     </div>
 
     <h3 class="common_title">总金额结算</h3>
-
-    <div class="common_list_con clearfix">
-        <div class="settle_con">
-            <div class="total_goods_count">共<em>2</em>件商品，总金额<b>42.60</b>元</div>
-            <div class="transit">运费：<b>10</b>元</div>
-            <div class="total_pay">实付款：<b>0</b>元</div>
+    <form action="{% url 'shop_order:order' %}" method="post">
+    {% csrf_token %}
+        <div class="common_list_con clearfix">
+            <div class="settle_con">
+                <div class="total_goods_count">共<em>2</em>件商品，总金额<b>42.60</b>元</div>
+                <div class="transit">运费：<b>10</b>元</div>
+                <div class="total_pay">实付款：<b>0</b>元</div>
+                <input type="hidden" name="cart_id" value="{{ cart_id }}">
+            </div>
         </div>
-    </div>
-
-    <div class="order_submit clearfix">
-        <a href="javascript:;" id="order_btn">提交订单</a>
-    </div>
-
+        <div class="order_submit clearfix">
+            <input type="submit" value="提交订单">
+        </div>
+    </form>
     <div class="popup_con">
         <div class="popup">
             <p>订单提交成功！</p>
@@ -88,7 +90,7 @@
 
                 setTimeout(function () {
                     $('.popup_con').fadeOut('fast', function () {
-                        window.location.href = 'index.html';
+{#                        window.location.href = 'index.html';#}
                     });
                 }, 3000)
 

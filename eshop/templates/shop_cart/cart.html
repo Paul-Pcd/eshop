@@ -84,10 +84,11 @@
         }
         $(function () {
             var $ul = $('.cart_list_td');
+            var $total_checked =  $('.settlements .col01');
             get_total_price(); // 调用计算总商品价格的函数
 
             // 设定全选按钮的按钮的功能
-            $('.settlements .col01').children().click(function () {
+           $total_checked.children().click(function () {
                 var statue = $(this).prop('checked');
                 $(':checkbox').prop('checked', statue);
                 get_total_price();
@@ -102,6 +103,7 @@
                     $total_checked.prop('checked', true);
                 }
                 get_total_price();
+
             });
             //input 文本框失去焦点的时候
             function input_bur(ths) {
@@ -156,7 +158,7 @@
                             if (data.statue === '1') {
                                 $delete.parent().parent().remove();
                                 get_total_price();
-{#                                location.href = '/shop/index/';#}
+                                {#                                location.href = '/shop/index/';#}
                             }
                         });
                     }
